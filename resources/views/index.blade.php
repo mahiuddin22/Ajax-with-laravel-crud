@@ -61,40 +61,38 @@
                         <span id="updateT">Update New Teacher</span>
                     </div>
                     <div class="card-body">
-                        <form>
-                            <div class="row">
-                                <div class="col">
-                                    <label for="name">Name:</label>
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="Name">
-                                </div>
-                                <div class="col">
-                                    <label for="email">Email:</label>
-                                    <input type="email" id="email" name="email" class="form-control" placeholder="Email">
-                                </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="name">Name:</label>
+                                <input type="text" id="name" name="name" class="form-control" placeholder="Name">
                             </div>
-                            <div class="row my-2">
-                                <div class="col">
-                                    <label for="position">Position:</label>
-                                    <input type="text" id="position" name="position" class="form-control" placeholder="Position">
-                                </div>
-                                <div class="col">
-                                    <label for="phone">Phone:</label>
-                                    <input type="text" id="phone" name="password" class="form-control" placeholder="Phone Number">
-                                </div>
+                            <div class="col">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="Email">
                             </div>
-                            <div class="row my-2">
-                                <div class="col">
-                                    <label for="password">Password:</label>
-                                    <input type="password" id="password" name="password" class="form-control" placeholder="Password">
-                                </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col">
+                                <label for="position">Position:</label>
+                                <input type="text" id="position" name="position" class="form-control" placeholder="Position">
                             </div>
-                            <div class="row my-2">
-                                <div class="col-4">
-                                    <input type="submit" id="addButton" class="form-control btn btn-primary" value="Add">
-                                    <input type="submit" id="updateButton" class="form-control btn btn-primary" value="Update">
-                                </div>
+                            <div class="col">
+                                <label for="phone">Phone:</label>
+                                <input type="text" id="phone" name="password" class="form-control" placeholder="Phone Number">
                             </div>
-                        </form>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col">
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col-4">
+                                <input type="submit" id="addButton" onclick="addData()" class="form-control btn btn-primary" value="Add">
+                                <input type="submit" id="updateButton" class="form-control btn btn-primary" value="Update">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -141,8 +139,8 @@
                         data = data + "<td>" + value.position + "</td>"
                         data = data + "<td>" + value.phone + "</td>"
                         data = data + "<td>"
-                        data = data+ "<button class='btn btn-info btn-sm'>Edit</button>"
-                        data = data+ "<button class='btn btn-danger btn-sm'>Delete</button>"
+                        data = data + "<button class='btn btn-info btn-sm mr-1'>Edit</button>"
+                        data = data + "<button class='btn btn-danger btn-sm'>Delete</button>"
                         data = data + "</td>"
                         data = data + "</tr>"
                     });
@@ -151,6 +149,20 @@
             })
         }
         allData();
+
+        function addData() {
+            var name = $("#name").val()
+            var email = $("#email").val()
+            var position = $("#position").val()
+            var phone = $("#phone").val()
+            var password = $("#password").val()
+
+            console.log(name);
+            console.log(email);
+            console.log(position);
+            console.log(phone);
+            console.log(password);
+        }
     </script>
 </body>
 
