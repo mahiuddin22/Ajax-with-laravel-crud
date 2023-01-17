@@ -1,8 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="errorMessage">
-
-    </div>
+    <span class="errorMessage"></span>
     <form action="" method="post" id="modalform">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -26,7 +24,13 @@
                     <div class="row my-2">
                         <div class="col">
                             <label>Position:</label>
-                            <input type="text" id="position" name="position" class="form-control" placeholder="Position">
+                            <select name="position" class="form-control" id="position">
+                                <option selected>Choose Option</option>
+                                <option value="1">Principal</option>
+                                <option value="2">Head Master</option>
+                                <option value="3">Assistan Teacher</option>
+                                <option value="4">Sub-assistan Teacher</option>
+                            </select>
                         </div>
                         <div class="col">
                             <label>Phone:</label>
@@ -48,4 +52,3 @@
         </div>
     </form>
 </div>
-

@@ -13,7 +13,7 @@
 <script>
     $.ajaxSetup({
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
         }
     });
 </script>
@@ -32,13 +32,13 @@
 
             $.ajax({
                 method: "post",
-                url: "http://127.0.0.1:8000/add/teacher",
+                url: "/add/teacher",
                 data: {
                     name: name,
                     email: email,
                     position: position,
                     phone: phone,
-                    password: password
+                    password: password,
                 },
                 success: function(res) {
                     if (res.status == 'success') {
@@ -48,6 +48,7 @@
                     }
                 },
                 error: function(err) {
+                    console.log(err);
                     let error = err.responseJSON;
                     $.each(error.errors, function(index, value) {
                         $(".errorMessage").append('<span class="text-danger">' + value + '</span><br>');
@@ -60,7 +61,7 @@
         $(document).on('click', ' .pagination a', function(event) {
             event.preventDefault();
             let page = $(this).attr('href').split('page=')[1];
-            teacher(page)
+            teacher(page);
         });
 
         function teacher(page) {
@@ -82,9 +83,9 @@
                 data: {
                     searchString: searchString
                 },
-                success:function(res){
+                success: function(res) {
                     $(".table-data").html(res);
-                    if(res.status == 'nothing'){
+                    if (res.status == 'nothing') {
                         $(".table-data").html('<br><span class="text-danger text-center border-top border-bottom mt-3 p-2"> Sorry, No Match Found </span>')
                     }
                 }

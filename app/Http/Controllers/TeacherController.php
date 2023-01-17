@@ -23,10 +23,10 @@ class TeacherController extends Controller
         $request->validate(
             [
                 "name"      => "required",
-                "email"     => "requied|unique:teachers",
-                "position"  => "requied",
-                "phone"     => "requied|unique:tachers",
-                "password"  => "requied",
+                "email"     => "required|unique:teachers",
+                "position"  => "required",
+                "phone"     => "required|unique:teachers",
+                "password"  => "required",
             ],
             [
                 "name.required" => "Name is required",
@@ -40,9 +40,22 @@ class TeacherController extends Controller
         );
 
         $teacher = new Teacher();
+
+        if ($request->position == 1) {
+            $position = "Principal";
+        } elseif ($request->position == 2) {
+            $position = "Head Master";
+        } elseif ($request->position == 3) {
+            $position = "Assistan Teacher";
+        } elseif ($request->position == 4) {
+            $position = "Sub-assistan Teacher";
+        } else {
+            echo "";
+        }
+
         $teacher->name = $request->name;
         $teacher->email = $request->email;
-        $teacher->position = $request->position;
+        $teacher->position = $position;
         $teacher->phone = $request->phone;
         $teacher->password = $request->password;
         $teacher->save();
@@ -64,16 +77,16 @@ class TeacherController extends Controller
     //I used 3 way to search according to collumn. Only one column is enough for create search.
     public function search(Request $request)
     {
-        $teachers = Teacher::where('name','like',"%".$request->searchString."%")
-        ->orwhere('position','like',"%".$request->searchString."%")
-        ->orwhere('email','like',"%".$request->searchString."%")
-        ->orwhere('phone','like',"%".$request->searchString."%")->orderBy('id', 'DESC')->paginate(5);
+        $teachers = Teacher::where('name', 'like', "%" . $request->searchString . "%")
+            ->orwhere('position', 'like', "%" . $request->searchString . "%")
+            ->orwhere('email', 'like', "%" . $request->searchString . "%")
+            ->orwhere('phone', 'like', "%" . $request->searchString . "%")->orderBy('id', 'DESC')->paginate(5);
 
-        if($teachers->count() >= 1){
+        if ($teachers->count() >= 1) {
             return view('pagination_index', compact('teachers'))->render();
-        }else{
+        } else {
             return response()->json([
-                'status'=>'nothing'
+                'status' => 'nothing'
             ]);
         }
     }
