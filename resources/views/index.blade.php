@@ -15,16 +15,49 @@
 <body>
 
 
-    <div class="container">
-        <div class="row bg-secondary text-light my-5">
-            <div class="card-body text-center">
-                <h1>Ajax Tutorial With Laravel 9</h1>
-            </div>
-        </div>
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-8">
+
+            <div class="wrapper col-2 bg-dark text-light">
+
+                <nav id="sidebar">
+                    <div class="sidebar-header py-2">
+                        <img src="{{asset('images/thumb.jpg')}}" class="rounded-circle" height="50" width="50" alt="defaul.png">
+                        <strong class="mx-2">Sidebar, Admin</strong>
+                    </div>
+
+                    <ul class="list-unstyled components">
+                        <system>Menu Items</system>
+                        <li class="active">
+                            <a href="#Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-light">Something</a>
+                            <ul class="collapse list-unstyled text-light" id="Submenu">
+                                <li>
+                                    <a href="#">something 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">something 2</a>
+                                </li>
+                                <li>
+                                    <a href="#">something 3</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+
+            <div class="col-10">
+                <div class="row text-light" style="background-color: #3786cd;">
+                    <div class="card-body text-center">
+                        <h4>Ajax Tutorial With Laravel 9</h4>
+                    </div>
+                </div>
+                <div class=" row">
+                    <span style="height: 3px; width:35%; background-color:#c52e3c; border-radius: 0 5px 5px 0"></span>
+                </div>
                 <h4 class="py-2">List of Teachers</h4>
-                <a href="" class="btn btn-info my-3" data-bs-toggle="modal" id="addmodal" data-bs-target="#exampleModal">Add Teacher</a>
+                <a href="" class="btn btn-info my-3" data-toggle="modal" data-target="#addTmodal">Add Teacher</a>
                 <input type="text" class="form-control mb-2 py-2" name="search" id="search" placeholder="search someone here...">
                 <div class="table-data">
                     <table class="table">
@@ -47,7 +80,16 @@
                                 <td>{{$teacher->position}}</td>
                                 <td>{{$teacher->phone}}</td>
                                 <td>
-                                    <a href="#" class="btn btn-info btn-sm">Edit</a>
+                                    <a href="" class="btn btn-info btn-sm" id="update_teacher"
+                                    data-toggle="modal"
+                                    data-target="#updateTmodal"
+                                    data-id          = "{{$teacher->id}}"
+                                    data-name        = "{{$teacher->name}}"
+                                    data-email       = "{{$teacher->email}}"
+                                    data-position    = "{{$teacher->position}}"
+                                    data-phone       = "{{$teacher->phone}}"
+                                    data-password    = "{{$teacher->password}}"
+                                    >Edit</a>
                                     <a href="#" class="btn btn-danger btn-sm">Delete</a>
                                 </td>
                             </tr>
@@ -57,21 +99,11 @@
                     {{$teachers->links();}}
                 </div>
             </div>
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-title p-2">
-                        <span id="addT">Add New Teacher</span>
-                        <span id="updateT">Update New Teacher</span>
-                    </div>
-                    <div class="card-body">
-
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
     @include('add_product_modal')
+    @include('update_product_modal')
     @include('script_js')
 </body>
 

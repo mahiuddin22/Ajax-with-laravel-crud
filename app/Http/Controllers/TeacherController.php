@@ -40,7 +40,7 @@ class TeacherController extends Controller
         );
 
         $teacher = new Teacher();
-
+        $position = $request->position;
         if ($request->position == 1) {
             $position = "Principal";
         } elseif ($request->position == 2) {
@@ -50,15 +50,63 @@ class TeacherController extends Controller
         } elseif ($request->position == 4) {
             $position = "Sub-assistan Teacher";
         } else {
-            echo "";
+            //
         }
 
-        $teacher->name = $request->name;
-        $teacher->email = $request->email;
+        $teacher->name     = $request->name;
+        $teacher->email    = $request->email;
         $teacher->position = $position;
-        $teacher->phone = $request->phone;
+        $teacher->phone    = $request->phone;
         $teacher->password = $request->password;
         $teacher->save();
+        return response()->json([
+            'status' => 'success',
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+
+        $request->validate(
+            [
+                "up_name"      => "required",
+                "up_email"     => "required|unique:teachers,email,".$request->up_id,
+                "up_position"  => "required",
+                "up_phone"     => "required|unique:teachers,phone,".$request->up_id,
+                "up_password"  => "required",
+            ],
+            [
+                "up_name.required" => "Name is required",
+                "up_email.required" => "Email is required",
+                "up_email.unique" => "Email already exists",
+                "up_position.required" => "Postion is required",
+                "up_phone.required" => "Phone is required",
+                "up_phone.unique" => "Phone already exixts",
+                "up_password.required" => "password is required",
+            ]
+        );
+
+        
+        $position = $request->up_position;
+        if ($request->up_position == 1) {
+            $position = "Principal";
+        } elseif ($request->up_position == 2) {
+            $position = "Head Master";
+        } elseif ($request->up_position == 3) {
+            $position = "Assistan Teacher";
+        } elseif ($request->up_position == 4) {
+            $position = "Sub-assistan Teacher";
+        } else {
+            //
+        }
+        
+        Teacher::where('id', $request->up_id)->update([
+            'name' => $request->up_name,
+            'email' => $request->up_email,
+            'position' => $position,
+            'phone' => $request->up_phone,
+            'password' => $request->up_password,
+        ]);
         return response()->json([
             'status' => 'success',
         ]);
