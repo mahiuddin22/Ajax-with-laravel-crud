@@ -70,9 +70,9 @@ class TeacherController extends Controller
         $request->validate(
             [
                 "up_name"      => "required",
-                "up_email"     => "required|unique:teachers,email,".$request->up_id,
+                "up_email"     => "required|unique:teachers,email," . $request->up_id,
                 "up_position"  => "required",
-                "up_phone"     => "required|unique:teachers,phone,".$request->up_id,
+                "up_phone"     => "required|unique:teachers,phone," . $request->up_id,
                 "up_password"  => "required",
             ],
             [
@@ -86,7 +86,7 @@ class TeacherController extends Controller
             ]
         );
 
-        
+
         $position = $request->up_position;
         if ($request->up_position == 1) {
             $position = "Principal";
@@ -99,7 +99,7 @@ class TeacherController extends Controller
         } else {
             //
         }
-        
+
         Teacher::where('id', $request->up_id)->update([
             'name' => $request->up_name,
             'email' => $request->up_email,
@@ -114,6 +114,15 @@ class TeacherController extends Controller
     public function test()
     {
         return view('test');
+    }
+
+    public function destroy(Request $request)
+    {
+        Teacher::find($request->teacher_id)->delete();
+
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 
     public function paginator(Request $request)

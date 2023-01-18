@@ -25,8 +25,7 @@
 <script>
     $(document).ready(function() {
 
-
-        $(".add_teacher").on('click', function(event) {
+        $(document).on('click', ".add_teacher", function(event) {
             event.preventDefault();
             var name = $("#name").val();
             var email = $("#email").val();
@@ -36,7 +35,7 @@
 
             $.ajax({
                 method: "post",
-                url: "/add/teacher",
+                url: "{{route('store')}}",
                 data: {
                     name: name,
                     email: email,
@@ -62,9 +61,91 @@
 
         });
 
+
+        //Show Teacher's Informations for update
+        $(document).on('click', '.update_teacher', function() {
+            let id = $(this).data('id');
+            let name = $(this).data('name');
+            let email = $(this).data('email');
+            let position = $(this).data('position');
+            let phone = $(this).data('phone');
+            let password = $(this).data('password');
+
+            $('#up_id').val(id);
+            $('#up_name').val(name);
+            $('#up_email').val(email);
+            $('#up_position').val(position);
+            $('#up_phone').val(phone);
+            $('#up_password').val(password);
+
+
+            //Update Teacher's Information
+            $(document).on('click', ".up_submit", function(event) {
+                event.preventDefault();
+                var up_id = $("#up_id").val();
+                var up_name = $("#up_name").val();
+                var up_email = $("#up_email").val();
+                var up_position = $("#up_position").val();
+                var up_phone = $("#up_phone").val();
+                var up_password = $("#up_password").val();
+
+                $.ajax({
+                    method: "post",
+                    url: "{{route('update.teacher')}}",
+                    data: {
+                        up_id: up_id,
+                        up_name: up_name,
+                        up_email: up_email,
+                        up_position: up_position,
+                        up_phone: up_phone,
+                        up_password: up_password,
+                    },
+                    success: function(res) {
+                        if (res.status == 'success') {
+                            $("#updateTmodal").modal('hide');
+                            $("#updateTmodalform")[0].reset();
+                            $(".table").load(location.href + ' .table');
+                        }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                        let error = err.responseJSON;
+                        $.each(error.errors, function(index, value) {
+                            $("#errorMessage").append('<span class="text-danger">' + value + '</span>' + '<br>');
+                        });
+                    }
+                });
+
+            });
+        });
+
+
+        //Delete Teacher's Information
+        $(document).on('click', ".delete_teacher", function(event) {
+            event.preventDefault();
+            let teacher_id = $(this).data('id');
+
+            if (confirm("Are you sure to confirm?")) {
+                $.ajax({
+                    method: "post",
+                    url: "{{route('delete.teacher')}}",
+                    data: {
+                        teacher_id: teacher_id
+                    },
+                    success: function(res) {
+                        if (res.status == 'success') {
+                            $(".table").load(location.href + ' .table');
+                        }
+                    }
+                });
+            }
+        });
+
+
+        //pagination with Ajax
         $(document).on('click', ' .pagination a', function(event) {
             event.preventDefault();
-            let page = $(this).attr('href').split('page=')[1];
+            let page = $(this).attr('href').split('page=')[1]
             teacher(page);
         });
 
@@ -76,6 +157,7 @@
                 }
             });
         }
+
         //Show or Filtering data by ajax
         $(document).on('keyup', function(event) {
             event.preventDefault();
@@ -96,61 +178,7 @@
             });
         });
 
-        //Show Teacher's Informations for update
-        $(document).on('click', '#update_teacher', function() {
-            let id = $(this).data('id');
-            let name = $(this).data('name');
-            let email = $(this).data('email');
-            let position = $(this).data('position');
-            let phone = $(this).data('phone');
-            let password = $(this).data('password');
 
-            $('#up_id').val(id);
-            $('#up_name').val(name);
-            $('#up_email').val(email);
-            $('#up_position').val(position);
-            $('#up_phone').val(phone);
-            $('#up_password').val(password);
-        });
-
-        //Update Teacher's Information
-        $(".up_teacher").on('click', function(event) {
-            event.preventDefault();
-            var up_id = $("#up_id").val();
-            var up_name = $("#up_name").val();
-            var up_email = $("#up_email").val();
-            var up_position = $("#up_position").val();
-            var up_phone = $("#up_phone").val();
-            var up_password = $("#up_password").val();
-
-            $.ajax({
-                method: "post",
-                url: "{{route('update.teacher')}}",
-                data: {
-                    up_id: up_id,
-                    up_name: up_name,
-                    up_email: up_email,
-                    up_position: up_position,
-                    up_phone: up_phone,
-                    up_password: up_password,
-                },
-                success: function(res) {
-                    if (res.status == 'success') {
-                        $("#updateTmodal").modal('hide');
-                        $("#updateTmodalform")[0].reset();
-                        $(".table").load(location.href + ' .table');
-                    }
-                },
-                error: function(err) {
-                    console.log(err);
-                    let error = err.responseJSON;
-                    $.each(error.errors, function(index, value) {
-                        $("#errorMessage").append('<span class="text-danger">' + value + '</span>' + '<br>');
-                    });
-                }
-            });
-
-        });
 
     });
 </script>
