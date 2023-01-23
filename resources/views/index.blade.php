@@ -9,6 +9,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <title>Ajax | Laravel</title>
 </head>
 
@@ -80,21 +81,8 @@
                                 <td>{{$teacher->position}}</td>
                                 <td>{{$teacher->phone}}</td>
                                 <td>
-                                    <a href=""
-                                    class="btn btn-info btn-sm update_teacher"
-                                    data-toggle="modal"
-                                    data-target="#updateTmodal"
-                                    data-id          = "{{$teacher->id}}"
-                                    data-name        = "{{$teacher->name}}"
-                                    data-email       = "{{$teacher->email}}"
-                                    data-position    = "{{$teacher->position}}"
-                                    data-phone       = "{{$teacher->phone}}"
-                                    data-password    = "{{$teacher->password}}"
-                                    >Edit</a>
-                                    <a href=""
-                                    class="btn btn-danger btn-sm delete_teacher"
-                                    data-id = "{{$teacher->id}}"
-                                    >Delete</a>
+                                    <a href="" class="btn btn-info btn-sm update_teacher" data-toggle="modal" data-target="#updateTmodal" data-id="{{$teacher->id}}" data-name="{{$teacher->name}}" data-email="{{$teacher->email}}" data-position="{{$teacher->position}}" data-phone="{{$teacher->phone}}" data-password="{{$teacher->password}}">Edit</a>
+                                    <a href="" class="btn btn-danger btn-sm delete_teacher" data-id="{{$teacher->id}}">Delete</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -109,6 +97,7 @@
     @include('add_product_modal')
     @include('update_product_modal')
     @include('script_js')
+    {!! Toastr::message() !!}
 </body>
 
 </html>
